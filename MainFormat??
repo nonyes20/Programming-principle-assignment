@@ -26,6 +26,7 @@ while User_Input != 'e'
   User_Input = input("Select one to proceed: ")
   if User_input == 'a':
     Mark_Attendance():
+
   elif User_Input == 'b':
     Manage_Timetable():
 
