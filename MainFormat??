@@ -1,0 +1,36 @@
+#Before we start we need to fill the below files with some data
+# Attendance_StudentID.txt
+# Timetables_StudentID.txt
+# Assignment_StudentID.txt
+
+import os
+User_Input = 'None'
+
+def Mark_Attendance():
+
+def Manage_Timetable():
+
+def Check_Assignment():
+
+def Display():
+
+while User_Input != 'e'
+
+  print("Menu:")
+  print("a) Mark Attendance")
+  print("b) Manage Timetables")
+  print("c) Submit/Check Assignments")
+  print("d) Display")
+  print("e) Exit")
+
+  User_Input = input("Select one to proceed: ")
+  if User_input == 'a':
+    Mark_Attendance():
+  elif User_Input == 'b':
+    Manage_Timetable():
+
+  elif User_Input == 'c':
+    Check_Assignment():
+
+  elif User_Input == 'd':
+    Display():
