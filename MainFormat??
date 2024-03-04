@@ -4,34 +4,33 @@
 # Assignment_StudentID.txt
 
 import os
-User_Input = 'None'
+User_Input = 0
 
 def Mark_Attendance():
+    print("Attendance")
 
 def Manage_Timetable():
+    print("Timetables")
 
 def Check_Assignment():
+    print("Check Assignment")
 
 def Display():
+    print("Display")
 
-while User_Input != 'e'
-
-  print("Menu:")
-  print("a) Mark Attendance")
-  print("b) Manage Timetables")
-  print("c) Submit/Check Assignments")
-  print("d) Display")
-  print("e) Exit")
-
-  User_Input = input("Select one to proceed: ")
-  if User_input == 'a':
-    Mark_Attendance():
-
-  elif User_Input == 'b':
-    Manage_Timetable():
-
-  elif User_Input == 'c':
-    Check_Assignment():
-
-  elif User_Input == 'd':
-    Display():
+while User_Input != 'e':
+    print("Menu:")
+    print("a) Mark Attendance")
+    print("b) Manage Timetables")
+    print("c) Submit/Check Assignments")
+    print("d) Display")
+    print("e) Exit")
+    User_Input = str(input("Select one to proceed: "))
+    if User_Input == 'a':
+        Mark_Attendance()
+    elif User_Input == 'b':
+        Manage_Timetable()
+    elif User_Input == 'c':
+        Check_Assignment()
+    elif User_Input == 'd':
+        Display()
