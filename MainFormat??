@@ -1,30 +1,44 @@
 import datetime
 import os
 
-fileMath1 = open('Math1Students.txt', 'w')
-fileMath1.write("24001\n24002\n24015")
-fileMath1.close()
-
-fileAttendance = open('Attendance.txt', 'w')
-fileAttendance.close()
-
-
-User_Input = 0
-
+User_Input = 'i'
 
 def Mark_Attendance():
-    CourseID = input("Enter your course ID: ")
-    if CourseID == 'MAT1024':
-        fileMath1 = open('Math1Students.txt', 'r')
-        readfile = fileMath1.read()
-        StudentID = input("Enter your student ID: ")
-    if StudentID in readfile:
-        fileAttendance = open('Attendance.txt', 'a')
-        fileAttendance.write(f"{StudentID}\n")
-        fileAttendance.close()
-
+    print("Mark Attendance")
+    
 def Manage_Timetable():
-    print("Timetables")
+    Student_ID = input("What is your student ID? ")
+    filename = ('timetables_' + Student_ID + '.txt')
+    print("a) Create Timetable")
+    print("b) Update Timetable")
+    print("c) Delete Timetable")
+    print("d) Display Timetable")
+    User_Input = str(input("Select one to proceed: "))
+    if User_Input == 'a':
+        Course_ID = input("Enter the ID of the course you want to take: ")
+        with open(filename, 'a+') as f:
+            f.seek(0)
+            courses = f.read()
+            if Course_ID in courses:
+                print("You are already enrolled in this course.\n")
+            elif Course_ID == 'BIO1024':
+                f.write('\nBIO1024 9am-10am, 12pm-1pm, 3pm-4pm')
+                print("Course successfully added.\n")
+            elif Course_ID == 'CHM1024':
+                f.write('\nCHM1024 10am-11am, 1pm-2pm, 4pm-5pm')
+                print("Course successfully added.\n")
+            elif Course_ID == 'PHY1024':
+                f.write('\nPHY1024 11am-12pm, 2pm-3pm, 5pm-6pm')
+                print("Course successfully added.\n")
+            elif Course_ID == 'ENG1024':
+                f.write('\nENG1024 8am-9am')
+                print("Course successfully added.\n")
+            else:
+                print("Invalid course ID.\n")
+        f = open(filename, 'r')
+        print(f.read())
+        f.close()
+
 
 def Check_Assignment():
     print("Check Assignment")
