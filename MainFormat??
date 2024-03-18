@@ -14,6 +14,7 @@ def Manage_Timetable():
     print("c) Delete Timetable")
     print("d) Display Timetable")
     User_Input = str(input("Select one to proceed: "))
+    # Add Courses
     if User_Input == 'a':
         Course_ID = input("Enter the ID of the course you want to take: ")
         with open(filename, 'a+') as f:
@@ -22,26 +23,29 @@ def Manage_Timetable():
             if Course_ID in courses:
                 print("You are already enrolled in this course.\n")
             elif Course_ID == 'BIO1024':
-                f.write('\nBIO1024 9am-10am, 12pm-1pm, 3pm-4pm')
+                f.write('BIO1024: 9am-10am, 12pm-1pm, 3pm-4pm\n')
                 print("Course successfully added.\n")
             elif Course_ID == 'CHM1024':
-                f.write('\nCHM1024 10am-11am, 1pm-2pm, 4pm-5pm')
+                f.write('CHM1024: 10am-11am, 1pm-2pm, 4pm-5pm\n')
                 print("Course successfully added.\n")
             elif Course_ID == 'PHY1024':
-                f.write('\nPHY1024 11am-12pm, 2pm-3pm, 5pm-6pm')
+                f.write('PHY1024: 11am-12pm, 2pm-3pm, 5pm-6pm\n')
                 print("Course successfully added.\n")
             elif Course_ID == 'ENG1024':
-                f.write('\nENG1024 8am-9am')
+                f.write('ENG1024: 8am-9am\n')
                 print("Course successfully added.\n")
             else:
                 print("Invalid course ID.\n")
         f = open(filename, 'r')
         print(f.read())
         f.close()
+
+    # Delete Courses
     elif User_Input == 'c':
         Course_ID = input("Enter the ID of the course you want to delete: ")
         with open(filename, 'r') as f:
             lines = f.readlines()
+        modified_lines = [line for line in lines if Course_ID not in line]
         with open(filename, 'w') as f:
             found = False
             for line in lines:
@@ -53,7 +57,15 @@ def Manage_Timetable():
                 print(f"Course with ID {Course_ID} has been deleted.\n")
             else:
                 print(f"Course with ID {Course_ID} not found.\n")
+
+    # Display Timetable
     elif User_Input == 'd':
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+        course_order = ['BIO', 'CHM', 'PHY', 'ENG']
+        sorted_lines = sorted(lines, key=lambda line: [course_order.index(course[:3]) for course in line.split() if course[:3] in course_order])
+        with open(filename, 'w') as f:
+            f.writelines(sorted_lines)
         with open(filename, 'r') as f:
             print(f.read())
     else:
@@ -83,4 +95,3 @@ while User_Input != 'e':
     elif User_Input == 'd':
         Display()
     else:
-        print("Invalid option. Please select a valid option.\n")
