@@ -24,16 +24,16 @@ def Manage_Timetable():
             if Course_ID in courses:
                 print("You are already enrolled in this course.\n")
             elif Course_ID == 'BIO1024':
-                f.write('BIO1024: 9am-10am, 12pm-1pm, 3pm-4pm\n')
+                f.write('BIO1024 Biology (UW-2-1): 9am-10am, 12pm-1pm, 3pm-4pm\n')
                 print("Course successfully added.\n")
             elif Course_ID == 'CHM1024':
-                f.write('CHM1024: 10am-11am, 1pm-2pm, 4pm-5pm\n')
+                f.write('CHM1024 Chemistry (JC Hall 2): 10am-11am, 1pm-2pm, 4pm-5pm\n')
                 print("Course successfully added.\n")
             elif Course_ID == 'PHY1024':
-                f.write('PHY1024: 11am-12pm, 2pm-3pm, 5pm-6pm\n')
+                f.write('PHY1024 Physics (Hall 3 GC): 11am-12pm, 2pm-3pm, 5pm-6pm\n')
                 print("Course successfully added.\n")
             elif Course_ID == 'ENG1024':
-                f.write('ENG1024: 8am-9am\n')
+                f.write('ENG1024 English (JC Hall 1): 8am-9am')
                 print("Course successfully added.\n")
             else:
                 print("Invalid course ID.\n")
@@ -95,4 +95,7 @@ while User_Input != 'e':
         Check_Assignment()
     elif User_Input == 'd':
         Display()
+    elif User_Input == 'e':
+        break
     else:
+        print("Invalid option. Please select a valid option.\n")
