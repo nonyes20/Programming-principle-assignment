@@ -9,11 +9,12 @@ def Mark_Attendance():
 def Manage_Timetable():
     Student_ID = input("What is your student ID? ")
     filename = ('timetables_' + Student_ID + '.txt')
-    print("a) Add Timetable")
+    print("a) Add Course")
     print("b) Update Timetable")
-    print("c) Delete Timetable")
+    print("c) Delete Course")
     print("d) Display Timetable")
     User_Input = str(input("Select one to proceed: "))
+
     # Add Courses
     if User_Input == 'a':
         Course_ID = input("Enter the ID of the course you want to take: ")
