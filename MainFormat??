@@ -9,7 +9,7 @@ def Mark_Attendance():
 def Manage_Timetable():
     Student_ID = input("What is your student ID? ")
     filename = ('timetables_' + Student_ID + '.txt')
-    print("a) Create Timetable")
+    print("a) Add Timetable")
     print("b) Update Timetable")
     print("c) Delete Timetable")
     print("d) Display Timetable")
@@ -38,6 +38,26 @@ def Manage_Timetable():
         f = open(filename, 'r')
         print(f.read())
         f.close()
+    elif User_Input == 'c':
+        Course_ID = input("Enter the ID of the course you want to delete: ")
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+        with open(filename, 'w') as f:
+            found = False
+            for line in lines:
+                if Course_ID in line:
+                    found = True
+                else:
+                    f.write(line)
+            if found:
+                print(f"Course with ID {Course_ID} has been deleted.\n")
+            else:
+                print(f"Course with ID {Course_ID} not found.\n")
+    elif User_Input == 'd':
+        with open(filename, 'r') as f:
+            print(f.read())
+    else:
+        print("Invalid option. Please select a valid option.\n")
 
 
 def Check_Assignment():
@@ -62,3 +82,5 @@ while User_Input != 'e':
         Check_Assignment()
     elif User_Input == 'd':
         Display()
+    else:
+        print("Invalid option. Please select a valid option.\n")
