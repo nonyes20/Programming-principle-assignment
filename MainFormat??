@@ -1,17 +1,6 @@
 import datetime
 import os
 
-# Populate text files
-
-x = 3
-
-while x > 0:
-    StudentTimetable = ('timetables_2400' + x + '.txt')
-f = open(StudentTimetable, 'w')
-f.write('Mr.Normal Gonzales\nBIO1024 Biology (UW-2-1): 9am-10am, 12pm-1pm, 3pm-4pm\nCHM1024 Chemistry (JC Hall 2): 10am-11am, 1pm-2pm, 4pm-5pm\nPHY1024 Physics (Hall 3 GC): 11am-12pm, 2pm-3pm, 5pm-6pm\nENG1024 English (JC Hall 1): 8am-9am\n')
-
-
-
 User_Input = 'i'
 
 def Mark_Attendance():
@@ -60,10 +49,52 @@ def Manage_Timetable():
             print(f.read())
 
     # Update Courses
-    if User_Input == 'b':
-        Course_ID = input("Enter the ID of the course you want to drop: ")
+    elif User_Input == 'b':
+        Course_ID = input("Enter the ID of the course you want to replace: ")
+        New_Course = input("Enter the new course information: ")
+        found = False
+    
+        # Available Courses
+        Available_Courses = {
+            'BIO1024': 'BIO1024 Biology (UW-2-1): 9am-10am, 12pm-1pm, 3pm-4pm\n',
+            'CHM1024': 'CHM1024 Chemistry (JC Hall 2): 10am-11am, 1pm-2pm, 4pm-5pm\n',
+            'PHY1024': 'PHY1024 Physics (Hall 3 GC): 11am-12pm, 2pm-3pm, 5pm-6pm\n',
+            'ENG1024': 'ENG1024 English (JC Hall 1): 8am-9am\n'
+        }
+
+        # Open the file in read mode
         with open(filename, 'r') as f:
             lines = f.readlines()
+    
+        # Open the file in write mode
+        with open(filename, 'w') as f:
+            for line in lines:
+                if Course_ID in line:
+                    found = True
+                    if New_Course in Available_Courses:
+                        
+                        # Write the new course
+                        f.write(Available_Courses[New_Course])
+                        print(Course_ID, " has been updated to ", New_Course)
+                    else:
+                        print("Invalid Course ID")
+                        break
+                else:
+                    f.write(line)
+    
+        if not found:
+            print("You are not enrolled in ", Course_ID)
+
+
+        # Display Timetable
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+        course_order = ['BIO', 'CHM', 'PHY', 'ENG']
+        sorted_lines = sorted(lines, key=lambda line: [course_order.index(course[:3]) for course in line.split() if course[:3] in course_order])
+        with open(filename, 'w') as f:
+            f.writelines(sorted_lines)
+        with open(filename, 'r') as f:
+            print(f.read())
 
     # Drop Courses
     elif User_Input == 'c':
@@ -105,7 +136,6 @@ def Manage_Timetable():
             print(f.read())
     else:
         print("Invalid option. Please select a valid option.\n")
-
 
 def Check_Assignment():
     print("Check Assignment")
