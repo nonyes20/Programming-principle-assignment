@@ -1,6 +1,17 @@
 import datetime
 import os
 
+# Populate text files
+
+x = 3
+
+while x > 0:
+    StudentTimetable = ('timetables_2400' + x + '.txt')
+f = open(StudentTimetable, 'w')
+f.write('Mr.Normal Gonzales\nBIO1024 Biology (UW-2-1): 9am-10am, 12pm-1pm, 3pm-4pm\nCHM1024 Chemistry (JC Hall 2): 10am-11am, 1pm-2pm, 4pm-5pm\nPHY1024 Physics (Hall 3 GC): 11am-12pm, 2pm-3pm, 5pm-6pm\nENG1024 English (JC Hall 1): 8am-9am\n')
+
+
+
 User_Input = 'i'
 
 def Mark_Attendance():
@@ -11,7 +22,7 @@ def Manage_Timetable():
     filename = ('timetables_' + Student_ID + '.txt')
     print("a) Add Course")
     print("b) Update Timetable")
-    print("c) Delete Course")
+    print("c) Drop Course")
     print("d) Display Timetable")
     User_Input = str(input("Select one to proceed: "))
 
@@ -37,13 +48,26 @@ def Manage_Timetable():
                 print("Course successfully added.\n")
             else:
                 print("Invalid course ID.\n")
-        f = open(filename, 'r')
-        print(f.read())
-        f.close()
 
-    # Delete Courses
+        # Display Timetable
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+        course_order = ['BIO', 'CHM', 'PHY', 'ENG']
+        sorted_lines = sorted(lines, key=lambda line: [course_order.index(course[:3]) for course in line.split() if course[:3] in course_order])
+        with open(filename, 'w') as f:
+            f.writelines(sorted_lines)
+        with open(filename, 'r') as f:
+            print(f.read())
+
+    # Update Courses
+    if User_Input == 'b':
+        Course_ID = input("Enter the ID of the course you want to drop: ")
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+
+    # Drop Courses
     elif User_Input == 'c':
-        Course_ID = input("Enter the ID of the course you want to delete: ")
+        Course_ID = input("Enter the ID of the course you want to drop: ")
         with open(filename, 'r') as f:
             lines = f.readlines()
         modified_lines = [line for line in lines if Course_ID not in line]
@@ -58,6 +82,16 @@ def Manage_Timetable():
                 print(f"Course with ID {Course_ID} has been deleted.\n")
             else:
                 print(f"Course with ID {Course_ID} not found.\n")
+
+        # Display Timetable
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+        course_order = ['BIO', 'CHM', 'PHY', 'ENG']
+        sorted_lines = sorted(lines, key=lambda line: [course_order.index(course[:3]) for course in line.split() if course[:3] in course_order])
+        with open(filename, 'w') as f:
+            f.writelines(sorted_lines)
+        with open(filename, 'r') as f:
+            print(f.read())
 
     # Display Timetable
     elif User_Input == 'd':
