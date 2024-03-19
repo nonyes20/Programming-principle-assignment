@@ -1,0 +1,162 @@
+import datetime
+import os
+
+User_Input = 'i'
+
+def Mark_Attendance():
+    print("Mark Attendance")
+    #Ask user if they are student or lecturer
+    print("Are you a student or a lecturer?")
+    print("a) Student")
+    print("b) Lecturer")
+    stu_lect = str(input("Select an option: "))
+    
+    if stu_lect == "a":
+        take_or_check()
+    elif stu_lect == "b":
+        attend_code()
+    else:
+        print("Choose a correct option 'a' or 'b'.")
+        return Mark_Attendance()
+    
+def take_or_check():
+    Student_ID = input("What is your student ID? ")
+    attendfile = ('attendance_' + Student_ID + '.txt')
+    
+    print("a) Take Attendance")
+    print("b) Check Attendance")
+    attend_input = str(input("Select an option: "))
+    if attend_input == "a":
+        # TAKE ATTENDACE
+        print("Take Attendance")
+        attend_code = int(input("Enter Attendance code: "))
+        current = datetime.datetime.now().time()
+        #displays current time
+        current_time = current.strftime("%H:%M:%S")
+        print(current_time)
+        #determine attendance taken 
+        begin = datetime.time(12, 0, 0)
+        end = datetime.time(19, 15, 0)
+        if begin <= current and end >= current:
+            print("Attendance taken")
+        else:
+            print("Not within time frame")
+ 
+    elif attend_input == "b":
+        # CHECK ATTENDANCE
+        print("Check Attendance")
+        subj_code = int(input("Enter Subject code: "))
+        percent = 19
+        print ("Your attendance percentage is: ", percent)
+    else:
+        print("Choose a correct option 'a' or 'b'.")
+        return take_or_check()
+    
+def attend_code():
+    import random
+    
+    lectpass = input("Enter password: ")
+    if lectpass == "pass1234":
+        lect_c =input("Create attendance code?[y/n]")
+        if lect_c == "y":
+            attend_c = random.randint(100000,999999)
+            print ("Attendance code: " , attend_c)
+        else:
+            return Mark_Attendance()
+    else:
+        print("Incorrect Password.")
+        return attend_code()
+
+def Manage_Timetable():
+    Student_ID = input("What is your student ID? ")
+    filename = ('timetables_' + Student_ID + '.txt')
+    print("a) Add Course")
+    print("b) Update Timetable")
+    print("c) Delete Course")
+    print("d) Display Timetable")
+    User_Input = str(input("Select one to proceed: "))
+
+    # Add Courses
+    if User_Input == 'a':
+        Course_ID = input("Enter the ID of the course you want to take: ")
+        with open(filename, 'a+') as f:
+            f.seek(0)
+            courses = f.read()
+            if Course_ID in courses:
+                print("You are already enrolled in this course.\n")
+            elif Course_ID == 'BIO1024':
+                f.write('BIO1024 Biology (UW-2-1): 9am-10am, 12pm-1pm, 3pm-4pm\n')
+                print("Course successfully added.\n")
+            elif Course_ID == 'CHM1024':
+                f.write('CHM1024 Chemistry (JC Hall 2): 10am-11am, 1pm-2pm, 4pm-5pm\n')
+                print("Course successfully added.\n")
+            elif Course_ID == 'PHY1024':
+                f.write('PHY1024 Physics (Hall 3 GC): 11am-12pm, 2pm-3pm, 5pm-6pm\n')
+                print("Course successfully added.\n")
+            elif Course_ID == 'ENG1024':
+                f.write('ENG1024 English (JC Hall 1): 8am-9am')
+                print("Course successfully added.\n")
+            else:
+                print("Invalid course ID.\n")
+        f = open(filename, 'r')
+        print(f.read())
+        f.close()
+
+    # Delete Courses
+    elif User_Input == 'c':
+        Course_ID = input("Enter the ID of the course you want to delete: ")
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+        modified_lines = [line for line in lines if Course_ID not in line]
+        with open(filename, 'w') as f:
+            found = False
+            for line in lines:
+                if Course_ID in line:
+                    found = True
+                else:
+                    f.write(line)
+            if found:
+                print(f"Course with ID {Course_ID} has been deleted.\n")
+            else:
+                print(f"Course with ID {Course_ID} not found.\n")
+
+    # Display Timetable
+    elif User_Input == 'd':
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+        course_order = ['BIO', 'CHM', 'PHY', 'ENG']
+        sorted_lines = sorted(lines, key=lambda line: [course_order.index(course[:3]) for course in line.split() if course[:3] in course_order])
+        with open(filename, 'w') as f:
+            f.writelines(sorted_lines)
+        with open(filename, 'r') as f:
+            print(f.read())
+    else:
+        print("Invalid option. Please select a valid option.\n")
+
+
+def Check_Assignment():
+    print("Check Assignment")
+
+def Display():
+    print("Display")
+
+while User_Input != 'e':
+    print("Menu:")
+    print("a) Mark Attendance")
+    print("b) Manage Timetables")
+    print("c) Submit/Check Assignments")
+    print("d) Display")
+    print("e) Exit")
+    User_Input = str(input("Select one to proceed: "))
+    if User_Input == 'a':
+        Mark_Attendance()
+    elif User_Input == 'b':
+        Manage_Timetable()
+    elif User_Input == 'c':
+        Check_Assignment()
+    elif User_Input == 'd':
+        Display()
+    elif User_Input == 'e':
+        break
+    else:
+        print("Invalid option. Please select a valid option.\n")
